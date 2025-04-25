@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results - Emergency Fund</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f2f2f2;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f4c75;
+        }
+
+        .summary {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .back-btn {
+            margin-top: 30px;
+            display: block;
+            text-align: center;
+            padding: 12px;
+            background-color: #0f4c75;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .back-btn:hover {
+            background-color: #3282b8;
+        }
+
+        canvas {
+            margin-top: 30px;
+        }
+
+        /* Dark mode */
+        body.dark-mode {
+            background-color: #1e1e1e;
+            color: #f2f2f2;
+        }
+
+        body.dark-mode .container {
+            background-color: #2c2c2c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a class="back-btn" href="/download-pdf" style="background-color: #45a049;">📄 Download PDF Report</a>
+        <h1>💰 Emergency Fund Summary</h1>
+        <div class="summary">
+            <p><strong>Total Emergency Fund Needed:</strong> ₹{{ emergency_fund | round(2) }}</p>
+            <p><strong>Tips to Reduce Expenses:</strong></p>
+            <ul>
+                {% for tip in tips %}
+                    <li>{{ tip }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <canvas id="expenseChart" width="600" height="300"></canvas>
+
+        <a class="back-btn" href="/">← Back to Calculator</a>
+    </div>
+
+    <script>
+        const labels = {{ labels | tojson }};
+        const data = {{ values | tojson }};
+        const ctx = document.getElementById('expenseChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Monthly Expenses (₹)',
+                    data: data,
+                    borderColor: '#0f4c75',
+                    backgroundColor: 'rgba(15, 76, 117, 0.2)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Apply dark mode if enabled
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+        }
+    </script>
+</body>
+</html>

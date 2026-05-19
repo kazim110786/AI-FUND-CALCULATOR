@@ -9,7 +9,6 @@
             margin: 0;
             padding: 20px;
             background-color: #f2f2f2;
-            transition: background-color 0.5s, color 0.5s;
         }
 
         .container {
@@ -19,7 +18,6 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            transition: background-color 0.5s, color 0.5s;
         }
 
         h1 {
@@ -33,17 +31,12 @@
             font-weight: bold;
         }
 
-        input[type="text"], input[type="number"] {
+        input {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 8px;
             border: 1px solid #ccc;
-        }
-
-        .slider-label {
-            margin-top: 20px;
-            font-weight: bold;
         }
 
         .submit-btn {
@@ -61,136 +54,34 @@
         .submit-btn:hover {
             background-color: #3282b8;
         }
-
-        /* Toggle switch */
-        .toggle-container {
-            display: flex;
-            justify-content: end;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 25px;
-            margin-left: 10px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider-switch {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 25px;
-        }
-
-        .slider-switch:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 2.5px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider-switch {
-            background-color: #0f4c75;
-        }
-
-        input:checked + .slider-switch:before {
-            transform: translateX(24px);
-        }
-
-        /* Dark mode */
-        body.dark-mode {
-            background-color: #1e1e1e;
-            color: #f2f2f2;
-        }
-
-        body.dark-mode .container {
-            background-color: #2c2c2c;
-        }
-
-        body.dark-mode input[type="text"],
-        body.dark-mode input[type="number"] {
-            background-color: #444;
-            color: #fff;
-            border: 1px solid #666;
-        }
-
-        .rupee-input {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .rupee-input span {
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
-    <div class="toggle-container">
-        <label for="themeToggle">Dark Mode</label>
-        <label class="switch">
-            <input type="checkbox" id="themeToggle" />
-            <span class="slider-switch"></span>
-        </label>
-    </div>
 
-    <div class="container">
-        <h1>🧠 Emergency Fund Calculator</h1>
-        <form action="/calculate" method="post">
-            <label>Enter your Monthly or Yearly Salary (₹):</label>
-            <input type="number" name="salary" step="any" required>
+<div class="container">
+    <h1>🧠 Emergency Fund Calculator</h1>
 
-            <label>Enter Monthly Expenses (₹):</label>
-            <input type="text" name="Rent" placeholder="Rent">
-            <input type="text" name="Utilities" placeholder="Utilities">
-            <input type="text" name="Groceries" placeholder="Groceries">
-            <input type="text" name="Transport" placeholder="Transport">
-            <input type="text" name="Insurance" placeholder="Insurance">
-            <input type="text" name="Other" placeholder="Other">
+    <form action="/calculate" method="post">
 
-            <label class="slider-label">How many months do you want to save for?</label>
-            <input type="range" name="months" min="1" max="24" value="6" oninput="document.getElementById('rangeVal').innerText = this.value">
-            <span id="rangeVal">6</span> months
+        <label>Enter your Salary (₹):</label>
+        <input type="number" name="salary" step="any" required>
 
-            <button class="submit-btn" type="submit">Calculate</button>
-        </form>
-    </div>
+        <label>Enter Monthly Expenses (₹):</label>
 
-    <script>
-        // Check localStorage for dark mode setting and apply it
-        if (localStorage.getItem("darkMode") === "enabled") {
-            document.body.classList.add("dark-mode");
-            document.getElementById("themeToggle").checked = true;
-        }
+        <input type="number" name="Rent" placeholder="Rent" step="any" value="0">
+        <input type="number" name="Utilities" placeholder="Utilities" step="any" value="0">
+        <input type="number" name="Groceries" placeholder="Groceries" step="any" value="0">
+        <input type="number" name="Transport" placeholder="Transport" step="any" value="0">
+        <input type="number" name="Insurance" placeholder="Insurance" step="any" value="0">
+        <input type="number" name="Other" placeholder="Other" step="any" value="0">
 
-        // Toggle theme and save preference in localStorage
-        document.getElementById("themeToggle").addEventListener("change", function() {
-            document.body.classList.toggle("dark-mode");
-            if (document.body.classList.contains("dark-mode")) {
-                localStorage.setItem("darkMode", "enabled");
-            } else {
-                localStorage.setItem("darkMode", "disabled");
-            }
-        });
-    </script>
+        <label>How many months do you want to save for?</label>
+        <input type="number" name="months" min="1" max="24" value="6">
+
+        <button class="submit-btn" type="submit">Calculate</button>
+
+    </form>
+</div>
+
 </body>
 </html>

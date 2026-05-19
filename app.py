@@ -8,15 +8,15 @@ def home():
 
 @app.route("/calculate", methods=["POST"])
 def calculate():
-    salary = float(request.form.get("salary", 0))
-    months = int(request.form.get("months", 1))
+    salary = float(request.form.get("salary") or 0)
+    months = int(request.form.get("months") or 1)
 
-    rent = float(request.form.get("Rent", 0))
-    utilities = float(request.form.get("Utilities", 0))
-    groceries = float(request.form.get("Groceries", 0))
-    transport = float(request.form.get("Transport", 0))
-    insurance = float(request.form.get("Insurance", 0))
-    other = float(request.form.get("Other", 0))
+    rent = float(request.form.get("Rent") or 0)
+    utilities = float(request.form.get("Utilities") or 0)
+    groceries = float(request.form.get("Groceries") or 0)
+    transport = float(request.form.get("Transport") or 0)
+    insurance = float(request.form.get("Insurance") or 0)
+    other = float(request.form.get("Other") or 0)
 
     total_expenses = rent + utilities + groceries + transport + insurance + other
     emergency_fund = total_expenses * months
